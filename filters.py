@@ -141,35 +141,32 @@ def create_filters(date=None, start_date=None, end_date=None,
         s_date_fil = Date_Fil(operator.ge, start_date)
         query_filters.append(s_date_fil)
     if end_date is not None:
-        e_date_fil = Date_Fil(operator.ge, end_date)
+        e_date_fil = Date_Fil(operator.le, end_date)
         query_filters.append(e_date_fil)
         
     if distance_min is not None:
-        dis_min = Distance_Fil(operator.le, float(distance_min))
+        dis_min = Distance_Fil(operator.ge, float(distance_min))
         query_filters.append(dis_min)
     if distance_max is not None:
         dis_max = Distance_Fil(operator.le, float(distance_max))
         query_filters.append(dis_max)
         
     if velocity_min is not None:
-        vel_min = Velocity_Fil(operator.le, float(velocity_min))
+        vel_min = Velocity_Fil(operator.ge, float(velocity_min))
         query_filters.append(vel_min)
     if velocity_max is not None:
         vel_max = Velocity_Fil(operator.le, float(velocity_max))
         query_filters.append(vel_max)
         
     if diameter_min is not None:
-        dia_min = Diameter_Fil(operator.le, float(diameter_min))
+        dia_min = Diameter_Fil(operator.ge, float(diameter_min))
         query_filters.append(dia_min)
     if diameter_max is not None:
         dia_max = Diameter_Fil(operator.le, float(diameter_max))
         query_filters.append(dia_max)
         
-    if hazardous is None:
-        hazardous = Hazardous_Fil(operator.le, False)
-        query_filters.append(hazardous)
-    else:
-        hazardous = Hazardous_Fil(operator.le, bool(hazardous))
+    if hazardous is not None:
+        hazardous = Hazardous_Fil(operator.ge, False)
         query_filters.append(hazardous)
         
     return query_filters
