@@ -14,9 +14,8 @@ You'll edit this file in Task 2.
 """
 import csv
 import json
-
 from models import NearEarthObject, CloseApproach
-from json_funct import Extract
+
 
 def load_neos(neo_csv_path='tests/test-neos-2020.csv'):
     """Read near-Earth object information from a CSV file.
@@ -24,7 +23,6 @@ def load_neos(neo_csv_path='tests/test-neos-2020.csv'):
     :param neo_csv_path: A path to a CSV file containing data about near-Earth objects.
     :return: A collection of `NearEarthObject`s.
     """
-    # TODO: Load NEO data from the given CSV file.
     neos_dict = {}
     neos = []
     keys = ['pdes', 'name', 'diameter', 'pha']
@@ -48,17 +46,11 @@ def load_approaches(cad_json_path='tests/test-cad-2020.json'):
     :param neo_csv_path: A path to a JSON file containing data about close approaches.
     :return: A collection of `CloseApproach`es.
     """
-    # TODO: Load close approach data from the given JSON file.
+
     ca = []
     with open(cad_json_path, 'r') as cad_file:
         contents = json.load(cad_file)
-        #for desc, info in contents.items():
-          #  desc, info = contents['fields'], contents['data']
-         #   data += info
-        #fields += desc
         for item in contents['data']:
             ca.append(CloseApproach(item[0],time=item[3],distance=float(item[4]),velocity=float(item[7])))
             
     return ca
-
-load_approaches()
