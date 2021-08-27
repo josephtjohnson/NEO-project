@@ -34,7 +34,7 @@ class NearEarthObject:
     """
     # TODO: How can you, and should you, change the arguments to this constructor?
     # If you make changes, be sure to update the comments in this file.
-    def __init__(self, designation, name, diameter=float('nan'), hazardous=False, **info):
+    def __init__(self, designation, name, diameter, hazardous, approaches = [], **info):
         """Create a new `NearEarthObject`.
 
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
@@ -53,10 +53,11 @@ class NearEarthObject:
             self.diameter = float('nan')
         else:
             self.diameter = float(diameter)
+       
         self.hazardous = hazardous
 
         # Create an empty initial collection of linked approaches.
-        self.approaches = []
+        self.approaches = list(approaches)
 
     @property
     def fullname(self):
