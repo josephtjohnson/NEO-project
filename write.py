@@ -12,6 +12,7 @@ You'll edit this file in Part 4.
 """
 import csv
 import json
+from helpers import datetime_to_str
 
 
 def write_to_csv(results, filename):
@@ -26,6 +27,18 @@ def write_to_csv(results, filename):
     """
     fieldnames = ('datetime_utc', 'distance_au', 'velocity_km_s', 'designation', 'name', 'diameter_km', 'potentially_hazardous')
     # TODO: Write the results to a CSV file, following the specification in the instructions.
+    with open('CloseApproach.csv', 'w') as outfile:
+        writer = csv.DictWriter(outfile,fieldnames=fieldnames)
+        writer.writeheader()
+        for row in results:
+            writer.writerow({
+                'datetime_utc':datetime_to_str(row.time),
+                'distance_au':row.distance,
+                'velocity_km_s':row.velocity,
+                'designation':row._designation,
+                'name':row.neo.name,
+                'diameter_km':row.neo.diameter,
+                'potentially_hazardous':str(row.neo.hazardous)})
 
 
 def write_to_json(results, filename):
@@ -40,3 +53,12 @@ def write_to_json(results, filename):
     :param filename: A Path-like object pointing to where the data should be saved.
     """
     # TODO: Write the results to a JSON file, following the specification in the instructions.
+    ca_list = []
+    for row in results:
+        ca_dict = {'datetime_utc':datetime_to_str(row.time),
+                   'distance_au':row.distance,
+                   'velocity_km_s':row.velocity,
+                   'neo':row.neo}
+        ca_list.append(ca_dict)
+    with open('CloseApproach.json', 'w') as outfile:
+        json.dump(ca_list, outfile,)
