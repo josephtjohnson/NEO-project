@@ -55,10 +55,16 @@ def write_to_json(results, filename):
     # TODO: Write the results to a JSON file, following the specification in the instructions.
     ca_list = []
     for row in results:
-        ca_dict = {'datetime_utc':datetime_to_str(row.time),
-                   'distance_au':row.distance,
-                   'velocity_km_s':row.velocity,
-                   'neo':row.neo}
+        ca_dict = {"datetime_utc": datetime_to_str(row.time),
+                   "distance_au": row.distance,
+                   "velocity_km_s": row.velocity,
+                   "neo": {
+                       "designation": row.neo.designation,
+                       "name": row.neo.name,
+                       "diameter_km": row.neo.diameter,
+                       "potentially_hazardous": row.neo.hazardous}}
+        
         ca_list.append(ca_dict)
     with open('CloseApproach.json', 'w') as outfile:
         json.dump(ca_list, outfile,)
+        
