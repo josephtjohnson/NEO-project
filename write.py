@@ -7,13 +7,11 @@ write the data.
 These functions are invoked by the main module with the output of the `limit`
 function and the filename supplied by the user at the command line. The file's
 extension determines which of these functions is used.
-
-You'll edit this file in Part 4.
 """
+
 import csv
 import json
 from helpers import datetime_to_str
-
 
 def write_to_csv(results, filename):
     """Write an iterable of `CloseApproach` objects to a CSV file.
@@ -37,7 +35,8 @@ def write_to_csv(results, filename):
                 'designation':row._designation,
                 'name':row.neo.name,
                 'diameter_km':row.neo.diameter,
-                'potentially_hazardous':str(row.neo.hazardous)})
+                'potentially_hazardous':str(row.neo.hazardous)
+            })
 
 
 def write_to_json(results, filename):
@@ -61,7 +60,9 @@ def write_to_json(results, filename):
                        "designation": row.neo.designation,
                        "name": row.neo.name if row.neo.name else '',
                        "diameter_km": row.neo.diameter,
-                       "potentially_hazardous": row.neo.hazardous}}
+                       "potentially_hazardous": row.neo.hazardous
+                   }
+                  }
         ca_list.append(ca_dict)
     with open(filename, 'w') as outfile:
         json.dump(ca_list, outfile, indent=4)
