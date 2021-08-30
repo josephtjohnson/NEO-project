@@ -14,8 +14,6 @@ A `NearEarthObject` maintains a collection of its close approaches, and a
 The functions that construct these objects use information extracted from the
 data files from NASA, so these objects should be able to handle all of the
 quirks of the data set, such as missing names and unknown diameters.
-
-You'll edit this file in Task 1.
 """
 from helpers import cd_to_datetime, datetime_to_str
 
@@ -35,7 +33,11 @@ class NearEarthObject:
 
     def __init__(self, designation, name, diameter, hazardous, approaches = [], **info):
         """Create a new `NearEarthObject`.
-
+        :param designation: The designation for a near earth object.
+        :param name: The name for a near earth object.
+        :param diameter: The diameter of a near earth object.
+        :param hazardous: A boolean value indicating if a near earth object is hazardous.
+        :param approaches: A collection of close approach events for a near earth object.        
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
         """
 
@@ -53,15 +55,15 @@ class NearEarthObject:
 
     @property
     def fullname(self):
-        """Return a representation of the full name of this NEO."""
+        """Return a representation of the full name of this NEO. Scenario for name undefined."""
 
         if self.name is not None:
             return self.designation + ' ' + self.name
-        if self.name is None:
+        else:
             return self.designation
             
     def __str__(self):
-        """Return `str(self)`. Scenarios for name undefined and hazard Y/N accounted for."""
+        """Return `str(self)`. Scenario for hazard Y/N accounted for."""
 
         if self.hazardous is True:
             return f"NEO {self.fullname} has a diameter of {self.diameter:.3f} km and is potentially hazardous."
@@ -70,6 +72,7 @@ class NearEarthObject:
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
+        
         return (f"NearEarthObject(designation={self.designation!r}, name={self.name!r}, "
                 f"diameter={self.diameter:.3f}, hazardous={self.hazardous!r})")
 
@@ -88,9 +91,13 @@ class CloseApproach:
     `NEODatabase` constructor.
     """
 
-    def __init__(self, designation, time, distance, velocity, neo=None):
+    def __init__(self, designation, time, distance, velocity, neo=None, **info):
         """Create a new `CloseApproach`.
-
+        :param designation: The designation for a near earth object.
+        :param time: The close approach event time.
+        :param distance: The distance from earth that a close approach event occurred.
+        :param velocity: The speed at which a near earth object was travling during a close approach event.
+        :param neo: The a collection of properties for a near earth object returned from NearEarthObject.
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
         """
         
@@ -118,9 +125,11 @@ class CloseApproach:
     
     def __str__(self):
         """Return `str(self)`."""
+        
         return f"A close approach event ocurred on {self.time_str} for '{self.neo.fullname}' at a distance of {self.distance:.2f} au with a velocity of {self.velocity:.2f} km/s. "
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
+        
         return (f"CloseApproach(time={self.time_str!r}, distance={self.distance:.2f}, "
                 f"velocity={self.velocity:.2f}, neo={self.neo!r})")
