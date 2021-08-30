@@ -8,8 +8,6 @@ user-specified criteria.
 Under normal circumstances, the main module creates one NEODatabase from the
 data on NEOs and close approaches extracted by `extract.load_neos` and
 `extract.load_approaches`.
-
-You'll edit this file in Tasks 2 and 3.
 """
 
 class NEODatabase:
@@ -38,6 +36,7 @@ class NEODatabase:
         :param neos: A collection of `NearEarthObject`s.
         :param approaches: A collection of `CloseApproach`es.
         """
+        
         self._neos = neos
         self._approaches = approaches
         self.neos_des = {}
@@ -48,7 +47,6 @@ class NEODatabase:
             self.neos_des[neo.designation] = neo
             if neo.name:
                 self.neos_name[neo.name] = neo
-        
         for approach in self._approaches:    
             neo = self.neos_des[approach._designation]
             approach.neo = neo
