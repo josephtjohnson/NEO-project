@@ -10,15 +10,13 @@ method `get` that subclasses can override to fetch an attribute of interest from
 the supplied `CloseApproach`.
 The `limit` function simply limits the maximum number of values produced by an
 iterator.
-You'll edit this file in Tasks 3a and 3c.
 """
+
 import operator
 import itertools
 
-
 class UnsupportedCriterionError(NotImplementedError):
     """A filter criterion is unsupported."""
-
 
 class AttributeFilter:
     """A general superclass for filters on comparable attributes.
@@ -41,11 +39,13 @@ class AttributeFilter:
         :param op: A 2-argument predicate comparator (such as `operator.le`).
         :param value: The reference value to compare against.
         """
+        
         self.op = op
         self.value = value
 
     def __call__(self, approach):
         """Invoke `self(approach)`."""
+        
         return self.op(self.get(approach), self.value)
 
     @classmethod
@@ -56,32 +56,45 @@ class AttributeFilter:
         :param approach: A `CloseApproach` on which to evaluate this filter.
         :return: The value of an attribute of interest, comparable to `self.value` via `self.op`.
         """
+        
         raise UnsupportedCriterionError
 
     def __repr__(self):
         return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, value={self.value})"
     
 class Date_Fil(AttributeFilter):
+    """Date filter to be used with user input that returns close approach date and time."""
+    
     @classmethod
     def get(cls, approach):
         return approach.time.date()
 
 class Distance_Fil(AttributeFilter):
+    """Distance filter to be used with user input that returns close approach distance."""
+    
     @classmethod
     def get(cls, approach):
         return approach.distance 
 
 class Velocity_Fil(AttributeFilter):
+    """Velocity filter to be used with user input that returns close approach velocity."""
+    
     @classmethod
     def get(cls, approach):
         return approach.velocity
 
 class Diameter_Fil(AttributeFilter):
+    """Diameter filter to be used with user input that returns the near earth object's diameter."""
+    
     @classmethod
     def get(cls, approach):
         return approach.neo.diameter
 
 class Hazardous_Fil(AttributeFilter):
+    """Hazard filter to be used with user input that returns a boolean value indicating 
+    if a near earth object is hazardous.
+    """
+    
     @classmethod
     def get(cls, approach):
         return approach.neo.hazardous
