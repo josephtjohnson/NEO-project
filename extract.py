@@ -31,8 +31,7 @@ def load_neos(neo_csv_path='tests/test-neos-2020.csv'):
             designation = row['pdes']
             name = row['name']
             diameter = row['diameter']
-            if row['pha'] == 'Y':
-                hazardous = True
+            hazardous = True
             if row['pha'] == 'N' or row['pha'] == '':
                 hazardous = False
             neo = NearEarthObject(designation,name,diameter,hazardous)
