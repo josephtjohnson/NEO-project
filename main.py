@@ -177,10 +177,9 @@ def inspect(database, pdes=None, name=None, verbose=False):
     :return: The matching `NearEarthObject`, or None if not found.
     """
     # Fetch the NEO of interest.
+    neo = database.get_neo_by_name(name)    
     if pdes:
         neo = database.get_neo_by_designation(pdes)
-    else:
-        neo = database.get_neo_by_name(name)
 
     # Ensure that we have received an NEO.
     if not neo:
